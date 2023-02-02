@@ -48,22 +48,10 @@ args = parser.parse_args()
 print(args.learning_rate)
 print(args.config)
 
-
 # learning_rate = 1e-3
 flags = OmegaConf.load(args.config)
 
-print(flags)
-print(args.learning_rate)
-print(args.learning_rate)
-print(args.learning_rate)
-
 flags.learning_rate = args.learning_rate
-
-print(flags.learning_rate)
-print(flags.learning_rate)
-print(flags.learning_rate)
-print(flags.learning_rate)
-
 
 save_dir = f"results/test1"
 if not os.path.exists(save_dir):
@@ -75,14 +63,14 @@ CLS_ENTROPY = {
 }
 
 
-# # Run the experiment
+# Run the experiment
 
-# train_dataset = MNISTWarpper
-# train_loader = DataLoader(train_dataset, batch_size=1)
-# pbar = tqdm(train_loader)
-# for x,y in pbar:
-#     CLS_ENTROPY[y] = compute_entropy(x)
-#     pbar.set_description()
+train_dataset = MNISTWarpper
+train_loader = DataLoader(train_dataset, batch_size=1)
+pbar = tqdm(train_loader)
+for x,y in pbar:
+    CLS_ENTROPY[y] = compute_entropy(x)
+    pbar.set_description()
     
 
 
