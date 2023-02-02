@@ -3,7 +3,6 @@ Non-parametric
 Entropy based MNIST Classifier 
 Stage1 : saving MNIST Traing data entropy
 """
-
 import os 
 import omegeconf
 import torch 
@@ -13,7 +12,6 @@ from tqdm import tqdm
 import pickle 
 from torch.utils.data import DataLoader
 
-
 import torchvision 
 from torch.utils.data import Dataset
 class MNISTWarpper(Dataset):
@@ -21,7 +19,8 @@ class MNISTWarpper(Dataset):
         self.data = torchvision.MNIST()
     
     def __getitem__(self, x):
-        pass 
+        return None
+    
     
     def __len__(self):
         return None
