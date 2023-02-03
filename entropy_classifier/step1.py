@@ -8,7 +8,7 @@ import torchvision #[Role]:???
 from torch.utils.data import Dataset, DataLoader
 class MNISTWarpper(Dataset):
     def __init__(self, root, train, transform):
-        self.data = torchvision.datasets.MNIST(root=root, train=train, transform=transform)
+        self.data = torchvision.datasets.MNIST(root=root, train=train, transform=transform, download=True)
     
     def __getitem__(self, x):
         return self.data[x]
