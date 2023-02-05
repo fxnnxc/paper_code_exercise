@@ -17,10 +17,10 @@ class MNISTWarpper(Dataset):
         return len(self.data)
 
 def compute_entropy(digit_image):
-    assert digit_image.size() == (1, 1, 28,28)
+    assert digit_image.size() == (1, 1, 28,28) 
     digit_image = digit_image.flatten()
-    digit_image = digit_image / digit_image.sum()
-    assert abs(digit_image.sum() - 1.0) < 1e-5, digit_image.sum()
+    digit_image = digit_image / digit_image.sum() #[Role]:???
+    assert abs(digit_image.sum() - 1.0) < 1e-5, digit_image.sum() #[Role]:???
     entropy =  (- digit_image * torch.nan_to_num(digit_image.log())).sum() # \sum - p log p
     assert entropy >=0
     return entropy 
