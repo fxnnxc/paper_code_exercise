@@ -1,17 +1,6 @@
 import torch 
 import torch.nn as nn 
 
-# def get_model(name):
-#     model = {
-#             "mnist":MnistCNN(),
-#             "cifar10":MnistCNN(),
-#             "cifar100":MnistCNN(),
-#             "fasion_mnist":MnistCNN(),
-#         }[name]
-#     return model 
-
-
-
 class CNN(nn.Module):
     def __init__(self, in_channels, n_classes, flatten_dim):
         super().__init__()
@@ -31,17 +20,4 @@ class CNN(nn.Module):
         x = self.out(x)
         return x
 
-    
-# class CIFAR10CNN():
-#     def __init__(self):
-#         pass 
-#     def forward(self, x):
-#         pass 
-        
-
-# class CIFAR100CNN():
-#     def __init__(self):
-#         pass 
-#     def forward(self, x):
-#         pass 
-    
+   
