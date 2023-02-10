@@ -10,3 +10,17 @@ python step1.py
 python step2.py --exp-path /results/seed-0/
 
 ```
+
+
+## CNN Classifier is made 
+
+
+```bash
+data=mnist
+data=fashion_mnist
+data=cifar10
+data=cifar100
+
+python run.py --data $data
+
+```
