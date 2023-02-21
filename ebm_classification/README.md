@@ -9,21 +9,8 @@ cd ebm_classification
 pip install -e .
 
 export data=mnist
-
-export loss=default
+export train_type=normal
+export loss=normal
 bash shell classifier.sh
 
-```
-
-
-## Define Another Loss Type
-
-See [emb_pkg/loss.py](emb_pkg/loss.py).
-
-You can run the experiment with different loss easily 
-
-```bash 
-export data=mnist
-export loss=energy
-bash shell classifier.sh
 ```
