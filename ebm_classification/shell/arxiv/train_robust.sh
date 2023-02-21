@@ -1,4 +1,4 @@
-data_path='/data3/bumjin/bumjin_data'
+data_path='untracked'
 model='cnn'
 train_type='robust'
 loss='normal'

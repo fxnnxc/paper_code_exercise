@@ -1,4 +1,4 @@
-data_path='/data3/bumjin/bumjin_data'
+data_path='untracked'
 config='configs/classifier_'$data$'.yaml'
 model='cnn'
 ebm_path='results/ebm/'$data/'cnn/seed_1'
