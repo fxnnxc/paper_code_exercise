@@ -1,4 +1,4 @@
-data_path='untracked'
+data_path='/data3/bumjin/bumjin_data'
 config='configs/classifier_'$data$'.yaml'
 model='cnn'
 ebm_path='results/ebm/'$data/'cnn/seed_1'
@@ -9,5 +9,6 @@ python train_classifier.py \
     --ebm-path $ebm_path \
     --data $data \
     --data-path $data_path \
-    --loss $loss
+    --loss $loss \
+    --train-type $train_type
     

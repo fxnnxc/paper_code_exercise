@@ -16,7 +16,7 @@ class Sampler():
         self.buffer = torch.load(path)
         self.num_neg_samples = len(self.buffer)
     
-    def langevian_dynamics(self, model, init_imgs,lagevian_steps,lagevian_step_size,  return_dynamics=False, verbose=False):
+    def langevian_dynamics(self, model, init_imgs,lagevian_steps,lagevian_step_size,  return_dynamics=False, verbose=False, reversed=False):
         is_training = model.training
         model = model.eval()
         X_k = init_imgs        
@@ -39,10 +39,13 @@ class Sampler():
             X_k.data.add_(white_noise)
             X_k.data.clamp_(min=-1.0, max=1.0)
             
-            energy = -model(X_k)
+            energy = -model(X_k)  # We model -E(x) instead of E(x) for stability 
             energy.sum().backward()
             X_k.grad.data.clamp_(-0.03, 0.03)
-            X_k.data.add_(-lagevian_step_size * X_k.grad.data)
+            if reversed: # increase the energy if reversed
+                X_k.data.add_(lagevian_step_size * X_k.grad.data)
+            else:
+                X_k.data.add_(-lagevian_step_size * X_k.grad.data)
             X_k.data.clamp_(min=-1.0, max=1.0)
             X_k.grad.detach_()
             X_k.grad.zero_()

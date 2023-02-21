@@ -14,7 +14,10 @@ class LossManager():
         self.running_pos_ent_loss = 0
         self.running_neg_ent_loss = 0
         
-    def baseline(self, 
+        self.running_ce_loss_pos = 0 
+        self.running_ce_loss_neg = 0
+        
+    def normal(self, 
                 flags, 
                 writer,  
                 pbar,
@@ -103,6 +106,38 @@ class LossManager():
         pbar.set_description(f"[INFO] : Data:{flags.data} Loss:{flags.loss} |🍀{flags.save_path}|📦#Batch:({flags.count:.2E}) E:({ flags.epoch/flags.epoch_num *100:.2f}%) D:({duration})|"+ 
                             f"Loss :{self.running_loss/flags.count:.3E}| CE :{self.running_ce_loss/flags.count:.3E}|"+  
                             f"Pos :{self.running_pos_ent_loss/flags.count:.3E}| Neg :{self.running_neg_ent_loss/flags.count:.3E}| ACC:{flags.current_performance:.3f}")    
+
+        return loss 
+
+    def pseudo_label(self,
+                flags, 
+                writer,  
+                pbar,
+                Y_pos,
+                Y_hat_pos, 
+                Y_hat_neg, 
+                energy_pos, 
+                energy_neg,
+                pseudo_label_alpha, 
+                **kwrgs):
+        # No positive entropy penalty + Weighted Negative
+        ce_loss_pos = flags.ce_coeff * torch.nn.CrossEntropyLoss()(Y_hat_pos, Y_pos)  #CE
+        ce_loss_neg = pseudo_label_alpha * flags.ce_coeff * torch.nn.CrossEntropyLoss()(Y_hat_neg, Y_pos)  #CE
+        loss = ce_loss_pos + ce_loss_neg
+        
+        flags.count += 1
+        writer.add_scalar(f"Loss/CE_pos", ce_loss_pos.item(), flags.count)      
+        writer.add_scalar(f"Loss/CE_neg", ce_loss_neg.item(), flags.count)      
+        writer.add_scalar(f"Loss/Loss", loss.item(), flags.count)      
+        self.running_loss += loss.item()
+        self.running_ce_loss_pos += ce_loss_pos.item()
+        self.running_ce_loss_neg += ce_loss_neg.item()
+        
+        duration = time.strftime("%H:%M:%S", time.gmtime(time.time()-flags.start_time))         
+        pbar.set_description(f"[INFO] : Data:{flags.data} Loss:{flags.loss} |🍀{flags.save_path}|📦#Batch:({flags.count:.2E}) E:({ flags.epoch/flags.epoch_num *100:.2f}%) D:({duration})|"+ 
+                            f"Loss :{self.running_loss/flags.count:.3E}| CE Pos:{self.running_ce_loss_pos/flags.count:.3E}|"+  
+                            f"CE Neg:{self.running_ce_loss_neg/flags.count:.3E}|"+ 
+                            f" ACC:{flags.current_performance:.3f}")    
 
         return loss 
 

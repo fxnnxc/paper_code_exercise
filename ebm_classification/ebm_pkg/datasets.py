@@ -12,6 +12,7 @@ CIFAR10_STD  = [0.2023, 0.1994, 0.2010]
 MNIST_MEAN = [0.1307]
 MNIST_STD  = [0.3081] 
 
+
 # ----------- STATIC functions -----------------
 import torchvision 
 import torchvision.transforms as T

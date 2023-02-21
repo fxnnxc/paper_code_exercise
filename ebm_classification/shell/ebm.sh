@@ -1,6 +1,6 @@
 
 config='configs/ebm_'$data'.yaml' 
-data_path='untracked'
+data_path='/data3/bumjin/bumjin_data'
 seed=1
 save_interval=1000 # batch 
 

@@ -10,7 +10,6 @@ def get_model(name, **kwargs):
     }[name]
     return model
 
-
 class CNN(nn.Module):
     def __init__(self, in_channels, cnn_dim, out_features, activation, dropout_p=0.0, **kwargs):
         super().__init__()
@@ -22,6 +21,7 @@ class CNN(nn.Module):
             activation = nn.ReLU
         else:
             raise ValueError() 
+        
         self.cnn1 = nn.Sequential(nn.Conv2d(in_channels,16,5,2,4),   activation())
         self.cnn2 = nn.Sequential(nn.BatchNorm2d(16), nn.Conv2d(16,32,3,2,1),  activation())
         self.cnn3 = nn.Sequential(nn.BatchNorm2d(32), nn.Conv2d(32,64,3,2,1),  activation())
@@ -34,6 +34,8 @@ class CNN(nn.Module):
         # self._init_params()
     
     def forward(self, x):
+        if hasattr(self, 'dropout'):
+            x = self.dropout(x)
         x = self.cnn1(x)
         x = self.cnn2(x)
         x = self.cnn3(x)
